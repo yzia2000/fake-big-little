@@ -212,6 +212,7 @@ class Bench:
             self.big = parse_cpulist(args.big)
             self.little = [c for c in range(nr_cpus()) if c not in self.big]
         self.saved_epp = read_epp_all()
+        self.idle_floor = None
         self.env = {}
         self.energy = os.path.join(BUILD, "energy")
         self.pinger = os.path.join(BUILD, "pinger")
@@ -298,6 +299,29 @@ class Bench:
             except OSError:
                 pass
 
+    def measure_idle_floor(self):
+        """Find the temperature this machine actually settles at when idle.
+
+        A fixed cooldown target is a trap: this laptop idles at 52 C, so a
+        hard-coded 50 C target means every single cooldown runs to its timeout
+        and never fires, silently turning a 40 minute session into a six hour
+        one while looking like it is working. Measure the floor instead and
+        aim a small margin above it.
+        """
+        samples = []
+        end = time.time() + self.args.floor_probe
+        while time.time() < end:
+            t = pkg_temp_c()
+            if t is not None:
+                samples.append(t)
+            time.sleep(1)
+        return min(samples) if samples else None
+
+    def cool_target(self):
+        if self.idle_floor is None:
+            return self.args.cool_to
+        return max(self.args.cool_to, self.idle_floor + self.args.cool_margin)
+
     def cooldown(self):
         """Idle until the package is at or below the target temperature.
 
@@ -305,7 +329,7 @@ class Bench:
         time is still recorded, with its real starting temperature, so the
         analysis can flag it rather than the harness quietly dropping it.
         """
-        target, deadline = self.args.cool_to, time.time() + self.args.cool_max
+        target, deadline = self.cool_target(), time.time() + self.args.cool_max
         t = pkg_temp_c()
         while t is not None and t > target and time.time() < deadline:
             time.sleep(2)
@@ -386,6 +410,23 @@ class Bench:
 
     # -- e2: what does the shared rail cost? -------------------------------
 
+    def e2_conditions(self):
+        """The placements e2 compares.
+
+        Shared with the run planner rather than duplicated, because the first
+        version of this had the planner reporting 22 arms while the experiment
+        actually ran 16 - a run-length estimate that disagrees with the run is
+        worse than no estimate.
+        """
+        conditions = [("idle", None)]
+        for k in sorted({1, 2, len(self.little)}):
+            if k <= len(self.little):
+                conditions.append((f"little{k}", cpulist(self.little[:k])))
+                conditions.append((f"big1+little{k}",
+                                   cpulist(sorted(self.big[:1] + self.little[:k]))))
+        conditions.append(("big1", cpulist(self.big[:1])))
+        return conditions
+
     def e2_coupling(self, rep):
         """Marginal cost of light threads, with and without a turbo thread.
 
@@ -393,14 +434,7 @@ class Bench:
         `littleN` and `big1+littleN` isolates the incremental package power of
         the same little threads under two different rail voltages.
         """
-        big1 = cpulist(self.big[:1])
-        conditions = [("idle", None)]
-        for k in (1, 2, len(self.little)):
-            if k <= len(self.little):
-                conditions.append((f"little{k}", cpulist(self.little[:k])))
-                conditions.append((f"big1+little{k}",
-                                   cpulist(sorted(self.big[:1] + self.little[:k]))))
-        conditions.append(("big1", big1))
+        conditions = self.e2_conditions()
 
         for epp_name, mapping in (
             ("partitioned", {**{c: EPP_BIG for c in self.big},
@@ -516,6 +550,41 @@ class Bench:
 
     # -- driver ------------------------------------------------------------
 
+    def plan(self):
+        """(experiment, nr_arms, seconds_of_measured_work_per_run)."""
+        out = []
+        if self.args.experiment in ("e1-rail", "all"):
+            out.append(("e1-rail", 4, self.args.dur))
+        if self.args.experiment in ("e2-coupling", "all"):
+            out.append(("e2-coupling", 2 * len(self.e2_conditions()),
+                        self.args.dur))
+        if self.args.experiment in ("e3-ab", "all"):
+            out.append(("e3-ab", len(self.E3_ARMS), 30.0))
+        return out
+
+    def print_plan(self):
+        """Say up front how long this will take.
+
+        The cooldown is the dominant term and it is invisible in the arm count,
+        which is how a session that looks like "175 short runs" turns into an
+        afternoon. Both bounds are printed: the lower assumes cooldown is
+        instant, the upper assumes it always times out.
+        """
+        total_runs = lo = hi = 0
+        print("\nplan:")
+        for name, arms, secs in self.plan():
+            runs = arms * self.args.reps
+            per_lo = secs + self.args.settle
+            per_hi = secs + self.args.settle + self.args.cool_max
+            total_runs += runs
+            lo += runs * per_lo
+            hi += runs * per_hi
+            print(f"  {name:<12} {arms} arms x {self.args.reps} reps = "
+                  f"{runs:>3} runs   {runs * per_lo / 60:5.1f}-"
+                  f"{runs * per_hi / 60:5.1f} min")
+        print(f"  {'total':<12} {'':>16} {total_runs:>3} runs   "
+              f"{lo / 60:5.1f}-{hi / 60:5.1f} min\n", flush=True)
+
     def warmup(self):
         print("warmup: building the workload once to fill page cache", flush=True)
         run(["make", "-C", self.genproj, "-s", "clean"])
@@ -526,15 +595,32 @@ class Bench:
         problems = self.preflight()
         if problems:
             for p in problems:
-                print(f"preflight: {p}", file=sys.stderr)
-            return 1
+                # --plan-only answers "how long will this take", which is
+                # worth answering without root and without a built tree.
+                label = "warning" if self.args.plan_only else "preflight"
+                print(f"{label}: {p}", file=sys.stderr)
+            if not self.args.plan_only:
+                return 1
 
         print(f"machine : {self.env['cpu_model']}")
         print(f"kernel  : {self.env['kernel']}")
         print(f"big     : {cpulist(self.big)}  (EPP {EPP_BIG})")
         print(f"little  : {cpulist(self.little)}  (EPP {EPP_LITTLE})")
         print(f"flat    : all CPUs EPP {EPP_FLAT}")
-        print(f"reps    : {self.args.reps}\n", flush=True)
+        print(f"reps    : {self.args.reps}")
+
+        print(f"probing idle temperature floor for "
+              f"{self.args.floor_probe:.0f}s ...", flush=True)
+        self.idle_floor = self.measure_idle_floor()
+        self.env["idle_floor_c"] = self.idle_floor
+        self.env["cool_target_c"] = self.cool_target()
+        print(f"idle floor : {self.idle_floor} C")
+        print(f"cool to    : {self.cool_target():.1f} C "
+              f"(max {self.args.cool_max:.0f}s per run)")
+
+        self.print_plan()
+        if self.args.plan_only:
+            return 0
 
         self.warmup()
 
@@ -586,6 +672,13 @@ def main():
                     help="cool the package to this many degrees C before a run")
     ap.add_argument("--cool-max", type=float, default=120.0,
                     help="give up cooling after this many seconds")
+    ap.add_argument("--cool-margin", type=float, default=3.0,
+                    help="cool to (measured idle floor + this), if that is "
+                         "higher than --cool-to")
+    ap.add_argument("--floor-probe", type=float, default=10.0,
+                    help="seconds spent measuring the idle temperature floor")
+    ap.add_argument("--plan-only", action="store_true",
+                    help="print the run plan and time estimate, then exit")
     ap.add_argument("--settle", type=float, default=3.0,
                     help="extra idle seconds after cooldown")
     ap.add_argument("--ping-hz", type=float, default=100)
