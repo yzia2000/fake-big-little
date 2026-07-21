@@ -38,6 +38,22 @@
 #include <bpf/libbpf.h>
 
 #include "bls_common.h"
+
+/*
+ * bpftool emits the skeleton's mirror structs using the kernel's BTF type
+ * names, so userspace has to supply them. Including vmlinux.h here instead
+ * would drag the entire kernel type universe into a plain userspace
+ * translation unit and collide with libc.
+ */
+typedef uint8_t  u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+typedef uint64_t u64;
+typedef int8_t   s8;
+typedef int16_t  s16;
+typedef int32_t  s32;
+typedef int64_t  s64;
+
 #include "bls.skel.h"
 
 #define IA32_HWP_REQUEST	0x774
@@ -290,14 +306,25 @@ static void restore_epp(void)
 static void report_partition(const char *epp_big, const char *epp_little)
 {
 	printf("{\"event\":\"partition\",\"cpus\":[");
-	for (int i = 0; i < nr_cpus_online; i++)
+	for (int i = 0; i < nr_cpus_online; i++) {
+		/*
+		 * The readback is the whole point of this record, so it is
+		 * rendered as a JSON number when we have it and as null when we
+		 * do not - never as an empty slot, which is neither.
+		 */
+		char before[16] = "null", after[16] = "null";
+
+		if (cpus[i].msr_valid) {
+			snprintf(before, sizeof(before), "%u", cpus[i].epp_msr_before);
+			snprintf(after, sizeof(after), "%u", cpus[i].epp_msr_after);
+		}
 		printf("%s{\"cpu\":%d,\"core\":%d,\"domain\":\"%s\",\"epp\":\"%s\","
 		       "\"epp_msr_before\":%s,\"epp_msr_after\":%s}",
 		       i ? "," : "", i, cpus[i].core_id,
 		       cpus[i].domain == BLS_DOM_LITTLE ? "little" : "big",
 		       cpus[i].domain == BLS_DOM_LITTLE ? epp_little : epp_big,
-		       cpus[i].msr_valid ? "" : "null",
-		       cpus[i].msr_valid ? "" : "null");
+		       before, after);
+	}
 	printf("]}\n");
 	fflush(stdout);
 }

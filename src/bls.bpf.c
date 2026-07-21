@@ -37,6 +37,10 @@ char _license[] SEC("license") = "GPL";
 
 #define NSEC_PER_MSEC 1000000ULL
 
+/* vmlinux.h carries no uapi constants; only the few we return are needed. */
+#define ENOMEM	12
+#define EINVAL	22
+
 /* ---- sched_ext kfuncs (signatures taken from the running kernel's BTF) ---- */
 void scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice,
 			u64 enq_flags) __ksym;

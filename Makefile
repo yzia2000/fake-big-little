@@ -14,7 +14,7 @@ VMLINUX_H := $(SRC)/vmlinux.h
 
 CFLAGS    ?= -O2 -g -Wall -Wextra -Wno-unused-parameter
 BPF_CFLAGS := -g -O2 -target bpf -D__TARGET_ARCH_$(ARCH) -Wall \
-              -Wno-compare-distinct-pointer-types -I$(SRC) -mcpu=v3
+              -Wno-compare-distinct-pointer-types -Wno-missing-declarations -I$(SRC) -mcpu=v3
 
 LIBBPF_CFLAGS := $(shell pkg-config --cflags libbpf 2>/dev/null)
 LIBBPF_LIBS   := $(shell pkg-config --libs libbpf 2>/dev/null || echo -lbpf)
