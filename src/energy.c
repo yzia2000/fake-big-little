@@ -59,6 +59,8 @@
 #define MSR_IA32_PACKAGE_THERM_STATUS	0x1B1
 #define MSR_IA32_TEMPERATURE_TARGET	0x1A2
 #define MSR_IA32_HWP_REQUEST		0x774
+#define MSR_IA32_HWP_CAPABILITIES	0x771
+#define MSR_IA32_HWP_REQUEST_PKG	0x772
 
 struct rapl_dom {
 	char		name[64];
@@ -541,7 +543,52 @@ int main(int argc, char **argv)
 			else
 				printf("%snull", i ? "," : "");
 		}
-		printf("]}\n");
+
+		/*
+		 * The full HWP request, not just the EPP field. If a core's
+		 * delivered frequency does not track its own EPP, the next
+		 * question is whether the min/max window pins it instead - and
+		 * that cannot be answered from the EPP byte alone. Reported per
+		 * CPU as [min, max, desired, epp], plus the package-scoped
+		 * request (0x772) and the hardware's own capabilities (0x771),
+		 * which bound what any of this can mean.
+		 */
+		printf("],\"hwp_request\":[");
+		for (int i = 0; i < nr_cpus; i++) {
+			uint64_t v = 0;
+
+			if (rdmsr(i, MSR_IA32_HWP_REQUEST, &v) == 0)
+				printf("%s[%u,%u,%u,%u]", i ? "," : "",
+				       (unsigned)(v & 0xff), (unsigned)((v >> 8) & 0xff),
+				       (unsigned)((v >> 16) & 0xff),
+				       (unsigned)((v >> 24) & 0xff));
+			else
+				printf("%snull", i ? "," : "");
+		}
+		{
+			uint64_t cap = 0, pkg = 0;
+			int have_cap = rdmsr(0, MSR_IA32_HWP_CAPABILITIES, &cap) == 0;
+			int have_pkg = rdmsr(0, MSR_IA32_HWP_REQUEST_PKG, &pkg) == 0;
+
+			printf("],\"hwp_capabilities\":");
+			if (have_cap)
+				/* [highest, guaranteed, most_efficient, lowest] */
+				printf("[%u,%u,%u,%u]",
+				       (unsigned)(cap & 0xff), (unsigned)((cap >> 8) & 0xff),
+				       (unsigned)((cap >> 16) & 0xff),
+				       (unsigned)((cap >> 24) & 0xff));
+			else
+				printf("null");
+			printf(",\"hwp_request_pkg\":");
+			if (have_pkg)
+				printf("[%u,%u,%u,%u]",
+				       (unsigned)(pkg & 0xff), (unsigned)((pkg >> 8) & 0xff),
+				       (unsigned)((pkg >> 16) & 0xff),
+				       (unsigned)((pkg >> 24) & 0xff));
+			else
+				printf("null");
+		}
+		printf("}\n");
 	}
 	return 0;
 }

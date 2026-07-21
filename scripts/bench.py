@@ -408,6 +408,47 @@ class Bench:
                         rep, slots, ok, start_temp=t,
                         notes="one spinner pinned to one CPU of each domain")
 
+    # -- e1b: which core's EPP actually sets the clock? --------------------
+
+    def e1b_poison(self, rep):
+        """Whose EPP decides the frequency of a busy core - its own, or the
+        package's most performance-biased request?
+
+        e1 showed a busy EPP=255 core running at full turbo while idle EPP=0
+        cores sat next to it, and the same core running at ~900 MHz when every
+        CPU was EPP=255. The only variable between those two is the EPP of
+        cores that were *not running anything*. This experiment holds the busy
+        core's own EPP at 255 and varies only the idle cores' EPP, which is the
+        minimal change that distinguishes the two explanations.
+
+        If the busy core tracks its own EPP, all four arms match.
+        If the package resolves to the most performance-biased request, the
+        frequency rises with the idle cores' bias, and per-core EPP
+        partitioning cannot work on this part at all.
+        """
+        probe = self.little[0]
+        others = [c for c in range(nr_cpus()) if c != probe]
+
+        for name, other_epp in (("others-power", EPP_LITTLE),
+                                ("others-balance", EPP_FLAT),
+                                ("others-performance", EPP_BIG),
+                                ("others-balance-power", "balance_power")):
+            mapping = {c: other_epp for c in others}
+            mapping[probe] = EPP_LITTLE          # the probe never changes
+            apply_epp(mapping)
+            t = self.cooldown()
+            csv = self.csv_path("e1b-poison", name, rep)
+            p = run([self.energy, "-i", "200", "-o", csv, "--label", name, "--",
+                     self.spin, "--cpus", str(probe),
+                     "--dur", str(self.args.dur), "--label", name])
+            slots = classify_json(collect_json(p.stdout))
+            ok = p.returncode == 0 and slots["energy"] is not None
+            self.record("e1b-poison", name,
+                        {"probe_cpu": probe, "probe_epp": EPP_LITTLE,
+                         "others_epp": other_epp},
+                        rep, slots, ok, start_temp=t,
+                        notes="probe CPU held at EPP power; only idle CPUs vary")
+
     # -- e2: what does the shared rail cost? -------------------------------
 
     def e2_conditions(self):
@@ -555,6 +596,8 @@ class Bench:
         out = []
         if self.args.experiment in ("e1-rail", "all"):
             out.append(("e1-rail", 4, self.args.dur))
+        if self.args.experiment in ("e1b-poison", "all"):
+            out.append(("e1b-poison", 4, self.args.dur))
         if self.args.experiment in ("e2-coupling", "all"):
             out.append(("e2-coupling", 2 * len(self.e2_conditions()),
                         self.args.dur))
@@ -629,6 +672,9 @@ class Bench:
             if self.args.experiment in ("e1-rail", "all"):
                 for rep in range(self.args.reps):
                     self.e1_rail(rep)
+            if self.args.experiment in ("e1b-poison", "all"):
+                for rep in range(self.args.reps):
+                    self.e1b_poison(rep)
             if self.args.experiment in ("e2-coupling", "all"):
                 for rep in range(self.args.reps):
                     self.e2_coupling(rep)
@@ -661,7 +707,7 @@ def main():
                                  formatter_class=argparse.RawDescriptionHelpFormatter,
                                  epilog=__doc__)
     ap.add_argument("experiment", nargs="?", default="all",
-                    choices=["all", "e1-rail", "e2-coupling", "e3-ab"])
+                    choices=["all", "e1-rail", "e1b-poison", "e2-coupling", "e3-ab"])
     ap.add_argument("--reps", type=int, default=7,
                     help="repetitions per arm; 7 is the floor for a usable "
                          "bootstrap CI on this much run-to-run noise")
