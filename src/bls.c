@@ -57,7 +57,6 @@ typedef int64_t  s64;
 #include "bls.skel.h"
 
 #define IA32_HWP_REQUEST	0x774
-#define IA32_HWP_CAPABILITIES	0x771
 
 static volatile sig_atomic_t exiting;
 

@@ -37,9 +37,8 @@ char _license[] SEC("license") = "GPL";
 
 #define NSEC_PER_MSEC 1000000ULL
 
-/* vmlinux.h carries no uapi constants; only the few we return are needed. */
+/* vmlinux.h carries no uapi constants; only the one we return is needed. */
 #define ENOMEM	12
-#define EINVAL	22
 
 /* ---- sched_ext kfuncs (signatures taken from the running kernel's BTF) ---- */
 void scx_bpf_dsq_insert(struct task_struct *p, u64 dsq_id, u64 slice,
@@ -48,8 +47,6 @@ bool scx_bpf_dsq_move_to_local(u64 dsq_id) __ksym;
 s32 scx_bpf_create_dsq(u64 dsq_id, s32 node) __ksym;
 bool scx_bpf_test_and_clear_cpu_idle(s32 cpu) __ksym;
 void scx_bpf_kick_cpu(s32 cpu, u64 flags) __ksym;
-s32 scx_bpf_dsq_nr_queued(u64 dsq_id) __ksym;
-u32 scx_bpf_nr_cpu_ids(void) __ksym;
 u64 scx_bpf_now(void) __ksym;
 bool bpf_cpumask_test_cpu(u32 cpu, const struct cpumask *cpumask) __ksym;
 
