@@ -1,0 +1,164 @@
+{
+ "experiment": "e2-coupling",
+ "arm": "flat.idle",
+ "factors": {
+  "epp": "flat",
+  "condition": "idle",
+  "cpus": null
+ },
+ "rep": 6,
+ "timestamp": "2026-07-22T12:49:58+00:00",
+ "ok": true,
+ "env": {
+  "kernel": "7.1.4-arch1-1",
+  "cpu_model": "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz",
+  "nr_cpus": 8,
+  "big_cpus": [
+   0,
+   1,
+   4,
+   5
+  ],
+  "little_cpus": [
+   2,
+   3,
+   6,
+   7
+  ],
+  "scaling_driver": "intel_pstate",
+  "governor": "powersave",
+  "on_ac": true,
+  "epp_at_start": {
+   "0": "balance_performance",
+   "1": "balance_performance",
+   "2": "balance_performance",
+   "3": "balance_performance",
+   "4": "balance_performance",
+   "5": "balance_performance",
+   "6": "balance_performance",
+   "7": "balance_performance"
+  },
+  "idle_floor_c": 40.0,
+  "cool_target_c": 50.0,
+  "start_temp_c": 49.0
+ },
+ "energy": {
+  "label": "flat.idle",
+  "wall_s": 20.0677,
+  "samples": 99,
+  "exit_code": 0,
+  "tsc_mhz": 1800.0,
+  "tjmax_c": 100,
+  "pkg_j": 11.265,
+  "core_j": 1.8,
+  "uncore_j": 0.0,
+  "dram_j": 5.655,
+  "psys_j": 1.275,
+  "rest_j": 9.464,
+  "avg_pkg_w": 0.5613,
+  "pkg_c_mean": 47.6,
+  "pkg_c_max": 50.0,
+  "cpu_avg_mhz": [
+   5.7,
+   6.7,
+   5.4,
+   4.9,
+   7.8,
+   5.7,
+   6.2,
+   4.6
+  ],
+  "cpu_bzy_mhz": [
+   896.9,
+   940.1,
+   927.4,
+   922.5,
+   934.3,
+   912.2,
+   998.4,
+   963.8
+  ],
+  "cpu_busy": [
+   0.0063,
+   0.0068,
+   0.0053,
+   0.0047,
+   0.0078,
+   0.0055,
+   0.0053,
+   0.0039
+  ],
+  "epp": [
+   128,
+   128,
+   128,
+   128,
+   128,
+   128,
+   128,
+   128
+  ],
+  "hwp_request": [
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ]
+  ],
+  "hwp_capabilities": [
+   40,
+   18,
+   9,
+   1
+  ],
+  "hwp_request_pkg": null
+ },
+ "pinger": null,
+ "spin": null,
+ "bls": null,
+ "partition": null,
+ "notes": ""
+}

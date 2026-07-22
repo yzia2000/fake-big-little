@@ -1,0 +1,265 @@
+{
+ "experiment": "e3-ab",
+ "arm": "scx-partitioned-strict",
+ "factors": {
+  "sched": "scx",
+  "epp": "partitioned",
+  "strict": true
+ },
+ "rep": 1,
+ "timestamp": "2026-07-22T13:01:28+00:00",
+ "ok": true,
+ "env": {
+  "kernel": "7.1.4-arch1-1",
+  "cpu_model": "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz",
+  "nr_cpus": 8,
+  "big_cpus": [
+   0,
+   1,
+   4,
+   5
+  ],
+  "little_cpus": [
+   2,
+   3,
+   6,
+   7
+  ],
+  "scaling_driver": "intel_pstate",
+  "governor": "powersave",
+  "on_ac": true,
+  "epp_at_start": {
+   "0": "balance_performance",
+   "1": "balance_performance",
+   "2": "balance_performance",
+   "3": "balance_performance",
+   "4": "balance_performance",
+   "5": "balance_performance",
+   "6": "balance_performance",
+   "7": "balance_performance"
+  },
+  "idle_floor_c": 40.0,
+  "cool_target_c": 50.0,
+  "start_temp_c": 49.0
+ },
+ "energy": {
+  "label": "scx-partitioned-strict",
+  "wall_s": 29.1397,
+  "samples": 146,
+  "exit_code": 0,
+  "tsc_mhz": 1800.0,
+  "tjmax_c": 100,
+  "pkg_j": 640.433,
+  "core_j": 607.859,
+  "uncore_j": 0.0,
+  "dram_j": 30.24,
+  "psys_j": 5.49,
+  "rest_j": 32.574,
+  "avg_pkg_w": 21.978,
+  "pkg_c_mean": 81.8,
+  "pkg_c_max": 94.0,
+  "cpu_avg_mhz": [
+   2554.1,
+   2549.6,
+   1835.4,
+   1807.0,
+   2558.9,
+   2545.7,
+   1775.5,
+   1794.6
+  ],
+  "cpu_bzy_mhz": [
+   2599.4,
+   2600.0,
+   2541.8,
+   2536.0,
+   2599.6,
+   2600.8,
+   2533.4,
+   2535.8
+  ],
+  "cpu_busy": [
+   0.9832,
+   0.9813,
+   0.7787,
+   0.7703,
+   0.9856,
+   0.9794,
+   0.7612,
+   0.769
+  ],
+  "epp": [
+   0,
+   0,
+   255,
+   255,
+   0,
+   0,
+   255,
+   255
+  ],
+  "hwp_request": [
+   [
+    4,
+    40,
+    0,
+    0
+   ],
+   [
+    4,
+    40,
+    0,
+    0
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    0
+   ],
+   [
+    4,
+    40,
+    0,
+    0
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ]
+  ],
+  "hwp_capabilities": [
+   40,
+   18,
+   12,
+   1
+  ],
+  "hwp_request_pkg": null
+ },
+ "pinger": {
+  "label": "scx-partitioned-strict",
+  "n": 2782,
+  "hz": 100.0,
+  "work_iters": 245700,
+  "target_work_us": 500.0,
+  "wake_us_mean": 179.37,
+  "wake_us_p50": 191.45,
+  "wake_us_p90": 196.82,
+  "wake_us_p99": 1496.05,
+  "wake_us_p999": 2571.14,
+  "wake_us_max": 3237.18,
+  "work_us_mean": 761.06,
+  "work_us_p50": 821.81,
+  "work_us_p90": 865.92,
+  "work_us_p99": 1525.76,
+  "work_us_p999": 3758.68,
+  "work_us_max": 10618.11
+ },
+ "spin": null,
+ "bls": {
+  "event": "stats",
+  "elapsed_s": 7.809,
+  "enqueue": 3306,
+  "direct_dispatch": 5325,
+  "dsq_big": 1822,
+  "dsq_little": 1484,
+  "local_hit": 3292,
+  "cross_domain": 0,
+  "no_idle_in_domain": 1249,
+  "reclassify": 111,
+  "run_big_ms": 25734,
+  "run_little_ms": 1433,
+  "tasks_big": 115,
+  "tasks_little": 669
+ },
+ "partition": {
+  "event": "partition",
+  "cpus": [
+   {
+    "cpu": 0,
+    "core": 0,
+    "domain": "big",
+    "epp": "performance",
+    "epp_msr_before": 0,
+    "epp_msr_after": 0
+   },
+   {
+    "cpu": 1,
+    "core": 1,
+    "domain": "big",
+    "epp": "performance",
+    "epp_msr_before": 0,
+    "epp_msr_after": 0
+   },
+   {
+    "cpu": 2,
+    "core": 2,
+    "domain": "little",
+    "epp": "power",
+    "epp_msr_before": 255,
+    "epp_msr_after": 0
+   },
+   {
+    "cpu": 3,
+    "core": 3,
+    "domain": "little",
+    "epp": "power",
+    "epp_msr_before": 255,
+    "epp_msr_after": 0
+   },
+   {
+    "cpu": 4,
+    "core": 0,
+    "domain": "big",
+    "epp": "performance",
+    "epp_msr_before": 0,
+    "epp_msr_after": 0
+   },
+   {
+    "cpu": 5,
+    "core": 1,
+    "domain": "big",
+    "epp": "performance",
+    "epp_msr_before": 0,
+    "epp_msr_after": 0
+   },
+   {
+    "cpu": 6,
+    "core": 2,
+    "domain": "little",
+    "epp": "power",
+    "epp_msr_before": 255,
+    "epp_msr_after": 0
+   },
+   {
+    "cpu": 7,
+    "core": 3,
+    "domain": "little",
+    "epp": "power",
+    "epp_msr_before": 255,
+    "epp_msr_after": 0
+   }
+  ]
+ },
+ "notes": ""
+}

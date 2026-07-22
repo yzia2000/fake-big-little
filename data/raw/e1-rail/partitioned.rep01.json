@@ -1,0 +1,184 @@
+{
+ "experiment": "e1-rail",
+ "arm": "partitioned",
+ "factors": {
+  "epp": "partitioned",
+  "probe_big": 0,
+  "probe_little": 2
+ },
+ "rep": 1,
+ "timestamp": "2026-07-22T11:16:58+00:00",
+ "ok": true,
+ "env": {
+  "kernel": "7.1.4-arch1-1",
+  "cpu_model": "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz",
+  "nr_cpus": 8,
+  "big_cpus": [
+   0,
+   1,
+   4,
+   5
+  ],
+  "little_cpus": [
+   2,
+   3,
+   6,
+   7
+  ],
+  "scaling_driver": "intel_pstate",
+  "governor": "powersave",
+  "on_ac": true,
+  "epp_at_start": {
+   "0": "balance_performance",
+   "1": "balance_performance",
+   "2": "balance_performance",
+   "3": "balance_performance",
+   "4": "balance_performance",
+   "5": "balance_performance",
+   "6": "balance_performance",
+   "7": "balance_performance"
+  },
+  "idle_floor_c": 40.0,
+  "cool_target_c": 50.0,
+  "start_temp_c": 49.0
+ },
+ "energy": {
+  "label": "partitioned",
+  "wall_s": 20.0016,
+  "samples": 100,
+  "exit_code": 0,
+  "tsc_mhz": 1800.0,
+  "tjmax_c": 100,
+  "pkg_j": 262.906,
+  "core_j": 246.278,
+  "uncore_j": 0.01,
+  "dram_j": 5.709,
+  "psys_j": 3.85,
+  "rest_j": 16.618,
+  "avg_pkg_w": 13.1443,
+  "pkg_c_mean": 67.5,
+  "pkg_c_max": 70.0,
+  "cpu_avg_mhz": [
+   3522.3,
+   21.2,
+   3521.6,
+   2.1,
+   0.9,
+   2.7,
+   2.3,
+   3.2
+  ],
+  "cpu_bzy_mhz": [
+   3591.1,
+   3330.8,
+   3591.1,
+   3342.3,
+   3408.9,
+   3334.3,
+   3447.7,
+   3330.3
+  ],
+  "cpu_busy": [
+   0.9809,
+   0.0064,
+   0.9806,
+   0.0006,
+   0.0003,
+   0.0008,
+   0.0007,
+   0.001
+  ],
+  "epp": [
+   0,
+   0,
+   255,
+   255,
+   0,
+   0,
+   255,
+   255
+  ],
+  "hwp_request": [
+   [
+    4,
+    40,
+    0,
+    0
+   ],
+   [
+    4,
+    40,
+    0,
+    0
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    0
+   ],
+   [
+    4,
+    40,
+    0,
+    0
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ]
+  ],
+  "hwp_capabilities": [
+   40,
+   18,
+   10,
+   1
+  ],
+  "hwp_request_pkg": null
+ },
+ "pinger": null,
+ "spin": {
+  "label": "partitioned",
+  "wall_s": 20.0002,
+  "duty": 1.0,
+  "threads": [
+   {
+    "cpu": 0,
+    "affinity_ok": true,
+    "iters": 9638780000,
+    "busy_s": 19.9758,
+    "miters_per_busy_s": 482.524
+   },
+   {
+    "cpu": 2,
+    "affinity_ok": true,
+    "iters": 9704660000,
+    "busy_s": 19.9741,
+    "miters_per_busy_s": 485.863
+   }
+  ]
+ },
+ "bls": null,
+ "partition": null,
+ "notes": "one spinner pinned to one CPU of each domain"
+}

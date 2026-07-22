@@ -1,0 +1,177 @@
+{
+ "experiment": "e1b-poison",
+ "arm": "others-power",
+ "factors": {
+  "probe_cpu": 2,
+  "probe_epp": "power",
+  "others_epp": "power"
+ },
+ "rep": 0,
+ "timestamp": "2026-07-22T11:28:10+00:00",
+ "ok": true,
+ "env": {
+  "kernel": "7.1.4-arch1-1",
+  "cpu_model": "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz",
+  "nr_cpus": 8,
+  "big_cpus": [
+   0,
+   1,
+   4,
+   5
+  ],
+  "little_cpus": [
+   2,
+   3,
+   6,
+   7
+  ],
+  "scaling_driver": "intel_pstate",
+  "governor": "powersave",
+  "on_ac": true,
+  "epp_at_start": {
+   "0": "balance_performance",
+   "1": "balance_performance",
+   "2": "balance_performance",
+   "3": "balance_performance",
+   "4": "balance_performance",
+   "5": "balance_performance",
+   "6": "balance_performance",
+   "7": "balance_performance"
+  },
+  "idle_floor_c": 40.0,
+  "cool_target_c": 50.0,
+  "start_temp_c": 49.0
+ },
+ "energy": {
+  "label": "others-power",
+  "wall_s": 20.0034,
+  "samples": 100,
+  "exit_code": 0,
+  "tsc_mhz": 1800.0,
+  "tjmax_c": 100,
+  "pkg_j": 27.844,
+  "core_j": 13.821,
+  "uncore_j": 0.0,
+  "dram_j": 5.619,
+  "psys_j": 4.023,
+  "rest_j": 14.023,
+  "avg_pkg_w": 1.392,
+  "pkg_c_mean": 49.4,
+  "pkg_c_max": 51.0,
+  "cpu_avg_mhz": [
+   9.0,
+   4.2,
+   1198.0,
+   4.9,
+   3.8,
+   3.9,
+   6.9,
+   4.6
+  ],
+  "cpu_bzy_mhz": [
+   1183.4,
+   1178.5,
+   1197.1,
+   1168.5,
+   1186.4,
+   1173.1,
+   1175.1,
+   1177.2
+  ],
+  "cpu_busy": [
+   0.0078,
+   0.0038,
+   1.0008,
+   0.0045,
+   0.0034,
+   0.0035,
+   0.006,
+   0.004
+  ],
+  "epp": [
+   255,
+   255,
+   255,
+   255,
+   255,
+   255,
+   255,
+   255
+  ],
+  "hwp_request": [
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ],
+   [
+    4,
+    40,
+    0,
+    255
+   ]
+  ],
+  "hwp_capabilities": [
+   40,
+   18,
+   13,
+   1
+  ],
+  "hwp_request_pkg": null
+ },
+ "pinger": null,
+ "spin": {
+  "label": "others-power",
+  "wall_s": 20.0004,
+  "duty": 1.0,
+  "threads": [
+   {
+    "cpu": 2,
+    "affinity_ok": true,
+    "iters": 3288820000,
+    "busy_s": 19.9756,
+    "miters_per_busy_s": 164.642
+   }
+  ]
+ },
+ "bls": null,
+ "partition": null,
+ "notes": "probe CPU held at EPP power; only idle CPUs vary"
+}

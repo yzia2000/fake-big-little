@@ -10,7 +10,28 @@ A sched_ext BPF scheduler that partitions a homogeneous Intel laptop CPU into "b
 
 ---
 
+## Result
+
+**The hypothesis fails, and not for the reason the model predicted.** It fails because the partition never exists in the first place: on this CPU **EPP is resolved package-wide**, so a core set to EPP 255 runs at exactly the same frequency as a core set to EPP 0.
+
+Measured over 203 runs, 7 reps per arm, all on AC, peak 74 °C against a 100 °C Tjmax:
+
+- **Frequency ratio between the "little" and "big" domains: `1.000`.** Two cores holding opposite ends of the 8-bit EPP range agree to 0.03%, confirmed by two independent measurement paths.
+- **A busy core's frequency is set by the EPP of cores running nothing.** Holding a probe core at EPP 255 and varying *only the idle cores' EPP* swings it **1200 → 3598 MHz, a 3.00× change** (95% CI [+2392, +2404] MHz). The probe's own `HWP_REQUEST` min/max window is byte-identical across those arms, so the window is excluded as the cause.
+- **The scheme costs 44% more idle power** (0.860 W vs 0.596 W, 95% CI [+0.194, +0.341]) and buys nothing.
+- **Enforcing the partition costs 7.1% energy and 11% wall time.** No arm saves energy; with n=7 nothing smaller than ~2% was resolvable, and a big.LITTLE-scale saving would have been unmissable.
+
+EPP works — all-cores-255 gives 951 MHz and 1.53 W against 13.10 W, an 8.6× swing. It is just not a per-core control. The i7-8550U has four thermally distinct cores and **one frequency domain**; per-core P-states are a Xeon feature.
+
+**[Full analysis →](docs/findings.md)** · [generated statistics](docs/results.md) · [per-run data](data/results.csv)
+
+### The model was right for the wrong reason
+
+`sim/rail_model.py` predicted rejection before any hardware was touched, blaming the **shared voltage rail** (4.7× rail tax, 69–77% of the benefit destroyed). The hardware fails one level earlier: there are no per-core clock domains for the rail argument to apply to. The model's assumption `per-core CLOCK domains exist` is true of Xeon and false of this part. Being right for the wrong reason is a weaker result than being right, and the writeup says so rather than claiming the prediction landed.
+
 ## The hypothesis, stated so it can be killed
+
+*Pre-registered before measurement and left unedited. The third bullet's premise — that per-core clock domains exist — is the part the hardware refuted; see [Result](#result).*
 
 - **H1:** on a homogeneous Intel package, per-core EPP + QoS-aware task placement reproduces big.LITTLE's energy behaviour.
 - **The mechanism H1 requires:** that a core set to EPP 255 actually runs slower *and cheaper* than a core set to EPP 0, at the same time, in the same package.
@@ -19,11 +40,12 @@ A sched_ext BPF scheduler that partitions a homogeneous Intel laptop CPU into "b
 
 ## Design of the experiment
 
-Three experiments, ordered so that each one can invalidate the next:
+Four experiments, ordered so that each one can invalidate the next. `e1b` was not in the original design — it exists because `e1` returned a result that needed explaining:
 
 | | Question | Kills the next stage if |
 |---|---|---|
-| **e1-rail** | Does per-core EPP produce divergent per-core clocks at all? | `little_MHz / big_MHz ≈ 1.0` — then the "partition" is a label with no physics behind it |
+| **e1-rail** | Does per-core EPP produce divergent per-core clocks at all? | `little_MHz / big_MHz ≈ 1.0` — then the "partition" is a label with no physics behind it. **This is what happened: 1.000.** |
+| **e1b-poison** | Whose EPP sets a busy core's clock — its own, or the package's? | added *after* e1-rail came back at 1.000, to isolate the mechanism |
 | **e2-coupling** | What does a light thread cost alone vs. alongside a turbo thread? | the two are equal — then there is no shared rail and the whole premise is wrong |
 | **e3-ab** | Full 2×2: `{EEVDF, scx_bls} × {flat EPP, partitioned EPP}` on `make -j8` + a latency-sensitive task | — |
 
@@ -52,7 +74,9 @@ Control arms are deliberate, not decorative:
 - `scripts/analyze.py` — BCa bootstrap CIs, permutation tests, Hedges' g, and **minimum detectable effect**. Data-quality gates (thermal spread across arms, AC/battery consistency, throttling, run-order drift) and **placement sanity** gates. A failing gate turns an apparent win into "not admissible" rather than a headline.
 - `sim/rail_model.py` — the shared-rail power model, run **before** touching hardware so the measurement has something falsifiable to hit.
 
-## Model predictions (before measurement)
+## Model predictions (recorded before measurement, retained as written)
+
+Kept unedited so the prediction can be compared against what happened; see [findings](docs/findings.md#what-this-says-about-the-model) for where it was wrong.
 
 `python3 sim/rail_model.py` — every constant tagged `[ARK]` (published spec), `[PUB]` (derivable for the class) or `[ASSUME]` (calibrate me), and `--calibrate` fits the assumed ones against measured samples.
 
@@ -64,7 +88,9 @@ Control arms are deliberate, not decorative:
 
 ## Status
 
-Hardware measurements are not yet collected. `data/` is empty by design — no numbers are quoted in this README that did not come out of the model, and the model's numbers are labelled as such. Results, once taken, land in `data/results.csv` and `docs/results.md`, both generated.
+Measurements complete: 203 runs, 7 reps per arm, zero failed runs. `data/results.csv` and `docs/results.md` are generated by `scripts/analyze.py` from the raw per-run JSON in `data/raw/`.
+
+One quality gate is left **failing** rather than suppressed: `core_j` drifts ~1.1% monotonically across reps within an arm while `rest_j` falls ~12%, with package total stable to 0.3%. It is a redistribution inside the package, orders of magnitude below the effects being claimed, and it is flagged in the report where a reader will see it.
 
 ## Reproducing
 

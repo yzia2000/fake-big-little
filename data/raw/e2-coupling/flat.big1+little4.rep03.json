@@ -1,0 +1,205 @@
+{
+ "experiment": "e2-coupling",
+ "arm": "flat.big1+little4",
+ "factors": {
+  "epp": "flat",
+  "condition": "big1+little4",
+  "cpus": "0,2-3,6-7"
+ },
+ "rep": 3,
+ "timestamp": "2026-07-22T12:25:07+00:00",
+ "ok": true,
+ "env": {
+  "kernel": "7.1.4-arch1-1",
+  "cpu_model": "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz",
+  "nr_cpus": 8,
+  "big_cpus": [
+   0,
+   1,
+   4,
+   5
+  ],
+  "little_cpus": [
+   2,
+   3,
+   6,
+   7
+  ],
+  "scaling_driver": "intel_pstate",
+  "governor": "powersave",
+  "on_ac": true,
+  "epp_at_start": {
+   "0": "balance_performance",
+   "1": "balance_performance",
+   "2": "balance_performance",
+   "3": "balance_performance",
+   "4": "balance_performance",
+   "5": "balance_performance",
+   "6": "balance_performance",
+   "7": "balance_performance"
+  },
+  "idle_floor_c": 40.0,
+  "cool_target_c": 50.0,
+  "start_temp_c": 50.0
+ },
+ "energy": {
+  "label": "flat.big1+little4",
+  "wall_s": 20.0029,
+  "samples": 100,
+  "exit_code": 0,
+  "tsc_mhz": 1800.0,
+  "tjmax_c": 100,
+  "pkg_j": 343.737,
+  "core_j": 327.342,
+  "uncore_j": 0.202,
+  "dram_j": 5.755,
+  "psys_j": 3.809,
+  "rest_j": 16.193,
+  "avg_pkg_w": 17.1844,
+  "pkg_c_mean": 73.8,
+  "pkg_c_max": 78.0,
+  "cpu_avg_mhz": [
+   3333.7,
+   29.4,
+   3333.8,
+   3333.8,
+   8.4,
+   15.0,
+   3333.8,
+   3333.8
+  ],
+  "cpu_bzy_mhz": [
+   3328.7,
+   3314.5,
+   3328.7,
+   3328.7,
+   3293.9,
+   3313.9,
+   3328.7,
+   3328.7
+  ],
+  "cpu_busy": [
+   1.0015,
+   0.0089,
+   1.0015,
+   1.0015,
+   0.0025,
+   0.0045,
+   1.0015,
+   1.0015
+  ],
+  "epp": [
+   128,
+   128,
+   128,
+   128,
+   128,
+   128,
+   128,
+   128
+  ],
+  "hwp_request": [
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ]
+  ],
+  "hwp_capabilities": [
+   40,
+   18,
+   10,
+   1
+  ],
+  "hwp_request_pkg": null
+ },
+ "pinger": null,
+ "spin": {
+  "label": "flat.big1+little4",
+  "wall_s": 20.0008,
+  "duty": 1.0,
+  "threads": [
+   {
+    "cpu": 0,
+    "affinity_ok": true,
+    "iters": 9178120000,
+    "busy_s": 19.9729,
+    "miters_per_busy_s": 459.53
+   },
+   {
+    "cpu": 2,
+    "affinity_ok": true,
+    "iters": 9181380000,
+    "busy_s": 19.9719,
+    "miters_per_busy_s": 459.715
+   },
+   {
+    "cpu": 3,
+    "affinity_ok": true,
+    "iters": 9181280000,
+    "busy_s": 19.9732,
+    "miters_per_busy_s": 459.679
+   },
+   {
+    "cpu": 6,
+    "affinity_ok": true,
+    "iters": 9182680000,
+    "busy_s": 19.9733,
+    "miters_per_busy_s": 459.747
+   },
+   {
+    "cpu": 7,
+    "affinity_ok": true,
+    "iters": 9183120000,
+    "busy_s": 19.9733,
+    "miters_per_busy_s": 459.769
+   }
+  ]
+ },
+ "bls": null,
+ "partition": null,
+ "notes": ""
+}

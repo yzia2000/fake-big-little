@@ -1,0 +1,177 @@
+{
+ "experiment": "e2-coupling",
+ "arm": "flat.little1",
+ "factors": {
+  "epp": "flat",
+  "condition": "little1",
+  "cpus": "2"
+ },
+ "rep": 5,
+ "timestamp": "2026-07-22T12:41:25+00:00",
+ "ok": true,
+ "env": {
+  "kernel": "7.1.4-arch1-1",
+  "cpu_model": "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz",
+  "nr_cpus": 8,
+  "big_cpus": [
+   0,
+   1,
+   4,
+   5
+  ],
+  "little_cpus": [
+   2,
+   3,
+   6,
+   7
+  ],
+  "scaling_driver": "intel_pstate",
+  "governor": "powersave",
+  "on_ac": true,
+  "epp_at_start": {
+   "0": "balance_performance",
+   "1": "balance_performance",
+   "2": "balance_performance",
+   "3": "balance_performance",
+   "4": "balance_performance",
+   "5": "balance_performance",
+   "6": "balance_performance",
+   "7": "balance_performance"
+  },
+  "idle_floor_c": 40.0,
+  "cool_target_c": 50.0,
+  "start_temp_c": 47.0
+ },
+ "energy": {
+  "label": "flat.little1",
+  "wall_s": 20.003,
+  "samples": 100,
+  "exit_code": 0,
+  "tsc_mhz": 1800.0,
+  "tjmax_c": 100,
+  "pkg_j": 166.218,
+  "core_j": 152.18,
+  "uncore_j": 0.0,
+  "dram_j": 5.611,
+  "psys_j": 4.026,
+  "rest_j": 14.038,
+  "avg_pkg_w": 8.3097,
+  "pkg_c_mean": 62.3,
+  "pkg_c_max": 64.0,
+  "cpu_avg_mhz": [
+   14.9,
+   8.0,
+   3585.6,
+   7.7,
+   3.6,
+   3.4,
+   1.7,
+   4.8
+  ],
+  "cpu_bzy_mhz": [
+   3531.4,
+   3474.2,
+   3594.4,
+   3406.8,
+   3497.6,
+   3384.6,
+   3446.3,
+   3369.6
+  ],
+  "cpu_busy": [
+   0.0042,
+   0.0023,
+   0.9975,
+   0.0022,
+   0.001,
+   0.001,
+   0.0005,
+   0.0015
+  ],
+  "epp": [
+   128,
+   128,
+   128,
+   128,
+   128,
+   128,
+   128,
+   128
+  ],
+  "hwp_request": [
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ],
+   [
+    4,
+    40,
+    0,
+    128
+   ]
+  ],
+  "hwp_capabilities": [
+   40,
+   18,
+   13,
+   1
+  ],
+  "hwp_request_pkg": null
+ },
+ "pinger": null,
+ "spin": {
+  "label": "flat.little1",
+  "wall_s": 20.0004,
+  "duty": 1.0,
+  "threads": [
+   {
+    "cpu": 2,
+    "affinity_ok": true,
+    "iters": 9883300000,
+    "busy_s": 19.9755,
+    "miters_per_busy_s": 494.771
+   }
+  ]
+ },
+ "bls": null,
+ "partition": null,
+ "notes": ""
+}
