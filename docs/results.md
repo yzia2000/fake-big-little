@@ -1,12 +1,12 @@
 <!-- GENERATED FILE -- DO NOT EDIT BY HAND.
      Produced by scripts/analyze.py from data/raw
-     Generated: 2026-07-22T22:14:08
+     Generated: 2026-07-22T22:18:54
      Every number below carries the run count it was computed from.
      Edits will be lost on the next `make analyze`; change the script instead. -->
 
 # fake-big-little: measured results
 
-- Generated: `2026-07-22T22:14:08`
+- Generated: `2026-07-22T22:18:54`
 - Raw runs read: **203** from `data/raw`
 - Tidy per-run data: `data/results.csv`
 - Resampling: 10000 bootstrap resamples, 10000 permutations, seed `random.Random(0)` (the report is reproducible byte-for-byte).
@@ -283,39 +283,6 @@ Difference in means (arm - control). A contrast whose CI straddles zero is repor
 - bzy_mhz_big_mean: higher than control by 12.59 MHz (+0.4%), 95% CI [3.278, 22.39] excludes zero; Hedges g = 1.181, permutation p = 0.0399; MDE = 16.29 MHz.
 - bzy_mhz_little_mean: insufficient data (n_control=0, n_arm=7); no contrast computed.
 
-## Minimum detectable effect
-
-At 80% power, alpha 0.05, two-sided, from the observed pooled sd and n. This matters more than any p-value here: it is the smallest true effect this design could have caught. Effects below it are invisible to the experiment, not absent from the machine.
-
-| arm              |               metric | unit | n ctl/arm | pooled sd | control mean | MDE (abs) | MDE (% of control) |
-| :--------------- | -------------------: | ---: | --------: | --------: | -----------: | --------: | -----------------: |
-| both-performance | energy_to_solution_j |    J |       7/7 |     0.648 |       260.90 |     1.057 |               0.4% |
-| both-performance |               edp_js |  J*s |       7/7 |     12.93 |       5218.8 |     21.09 |               0.4% |
-| both-performance |          pkg_j_per_s |    W |       7/7 |     0.032 |        13.04 |     0.053 |               0.4% |
-| both-performance |               wall_s |    s |       7/7 | 2.030e-04 |        20.00 | 3.310e-04 |               0.0% |
-| both-performance |               core_j |    J |       7/7 |     1.043 |       245.83 |     1.701 |               0.7% |
-| both-performance |            rest_frac |    - |       7/7 |     0.004 |        0.058 |     0.006 |              10.5% |
-| both-performance |     bzy_mhz_big_mean |  MHz |       7/7 |     10.15 |       3414.0 |     16.55 |               0.5% |
-| both-performance |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| both-power       | energy_to_solution_j |    J |       7/7 |     0.688 |       260.90 |     1.121 |               0.4% |
-| both-power       |               edp_js |  J*s |       7/7 |     13.74 |       5218.8 |     22.41 |               0.4% |
-| both-power       |          pkg_j_per_s |    W |       7/7 |     0.034 |        13.04 |     0.056 |               0.4% |
-| both-power       |               wall_s |    s |       7/7 | 2.605e-04 |        20.00 | 4.249e-04 |               0.0% |
-| both-power       |               core_j |    J |       7/7 |     0.855 |       245.83 |     1.395 |               0.6% |
-| both-power       |            rest_frac |    - |       7/7 |     0.015 |        0.058 |     0.025 |              43.4% |
-| both-power       |     bzy_mhz_big_mean |  MHz |       7/7 |     11.92 |       3414.0 |     19.45 |               0.6% |
-| both-power       |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| partitioned      | energy_to_solution_j |    J |       7/7 |     0.482 |       260.90 |     0.786 |               0.3% |
-| partitioned      |               edp_js |  J*s |       7/7 |     9.629 |       5218.8 |     15.71 |               0.3% |
-| partitioned      |          pkg_j_per_s |    W |       7/7 |     0.024 |        13.04 |     0.039 |               0.3% |
-| partitioned      |               wall_s |    s |       7/7 | 1.864e-04 |        20.00 | 3.041e-04 |               0.0% |
-| partitioned      |               core_j |    J |       7/7 |     0.844 |       245.83 |     1.377 |               0.6% |
-| partitioned      |            rest_frac |    - |       7/7 |     0.004 |        0.058 |     0.006 |              10.4% |
-| partitioned      |     bzy_mhz_big_mean |  MHz |       7/7 |     9.985 |       3414.0 |     16.29 |               0.5% |
-| partitioned      |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-
-Reading: on `energy_to_solution_j`, the weakest arm comparison (`both-power`) can only detect effects of **0.4% or larger**. To halve that, quadruple the reps.
-
 ## Coverage
 
 | field              | present | missing | coverage |
@@ -521,39 +488,6 @@ Difference in means (arm - control). A contrast whose CI straddles zero is repor
 - rest_frac: higher than control by 0.418 - (+487.9%), 95% CI [0.415, 0.419] excludes zero; Hedges g = 220.13, permutation p = 8.9991e-04; MDE = 0.003 -.
 - bzy_mhz_big_mean: insufficient data (n_control=0, n_arm=7); no contrast computed.
 - bzy_mhz_little_mean: insufficient data (n_control=7, n_arm=0); no contrast computed.
-
-## Minimum detectable effect
-
-At 80% power, alpha 0.05, two-sided, from the observed pooled sd and n. This matters more than any p-value here: it is the smallest true effect this design could have caught. Effects below it are invisible to the experiment, not absent from the machine.
-
-| arm                  |               metric | unit | n ctl/arm | pooled sd | control mean | MDE (abs) | MDE (% of control) |
-| :------------------- | -------------------: | ---: | --------: | --------: | -----------: | --------: | -----------------: |
-| others-balance-power | energy_to_solution_j |    J |       7/7 |     0.627 |       166.26 |     1.022 |               0.6% |
-| others-balance-power |               edp_js |  J*s |       7/7 |     12.53 |       3325.6 |     20.44 |               0.6% |
-| others-balance-power |          pkg_j_per_s |    W |       7/7 |     0.031 |        8.312 |     0.051 |               0.6% |
-| others-balance-power |               wall_s |    s |       7/7 | 1.543e-04 |        20.00 | 2.517e-04 |               0.0% |
-| others-balance-power |               core_j |    J |       7/7 |     0.600 |       152.02 |     0.978 |               0.6% |
-| others-balance-power |            rest_frac |    - |       7/7 |     0.007 |        0.086 |     0.011 |              12.5% |
-| others-balance-power |     bzy_mhz_big_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| others-balance-power |  bzy_mhz_little_mean |  MHz |       7/7 |     9.998 |       3463.1 |     16.31 |               0.5% |
-| others-performance   | energy_to_solution_j |    J |       7/7 |     0.321 |       166.26 |     0.524 |               0.3% |
-| others-performance   |               edp_js |  J*s |       7/7 |     6.424 |       3325.6 |     10.48 |               0.3% |
-| others-performance   |          pkg_j_per_s |    W |       7/7 |     0.016 |        8.312 |     0.026 |               0.3% |
-| others-performance   |               wall_s |    s |       7/7 | 1.626e-04 |        20.00 | 2.652e-04 |               0.0% |
-| others-performance   |               core_j |    J |       7/7 |     0.173 |       152.02 |     0.283 |               0.2% |
-| others-performance   |            rest_frac |    - |       7/7 | 7.962e-04 |        0.086 |     0.001 |               1.5% |
-| others-performance   |     bzy_mhz_big_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| others-performance   |  bzy_mhz_little_mean |  MHz |       7/7 |     5.649 |       3463.1 |     9.214 |               0.3% |
-| others-power         | energy_to_solution_j |    J |       7/7 |     0.140 |       166.26 |     0.228 |               0.1% |
-| others-power         |               edp_js |  J*s |       7/7 |     2.807 |       3325.6 |     4.578 |               0.1% |
-| others-power         |          pkg_j_per_s |    W |       7/7 |     0.007 |        8.312 |     0.011 |               0.1% |
-| others-power         |               wall_s |    s |       7/7 | 1.648e-04 |        20.00 | 2.687e-04 |               0.0% |
-| others-power         |               core_j |    J |       7/7 |     0.097 |       152.02 |     0.158 |               0.1% |
-| others-power         |            rest_frac |    - |       7/7 |     0.002 |        0.086 |     0.003 |               3.4% |
-| others-power         |     bzy_mhz_big_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| others-power         |  bzy_mhz_little_mean |  MHz |       7/0 |       n/a |       3463.1 |       n/a |                n/a |
-
-Reading: on `energy_to_solution_j`, the weakest arm comparison (`others-balance-power`) can only detect effects of **0.6% or larger**. To halve that, quadruple the reps.
 
 ## Coverage
 
@@ -1162,135 +1096,6 @@ Difference in means (arm - control). A contrast whose CI straddles zero is repor
 - bzy_mhz_big_mean: lower than control by 143.02 MHz (-4.1%), 95% CI [-152.35, -135.34] excludes zero; Hedges g = -15.62, permutation p = 8.9991e-04; MDE = 13.98 MHz.
 - bzy_mhz_little_mean: insufficient data (n_control=0, n_arm=7); no contrast computed.
 
-## Minimum detectable effect
-
-At 80% power, alpha 0.05, two-sided, from the observed pooled sd and n. This matters more than any p-value here: it is the smallest true effect this design could have caught. Effects below it are invisible to the experiment, not absent from the machine.
-
-| arm                      |               metric | unit | n ctl/arm | pooled sd | control mean | MDE (abs) | MDE (% of control) |
-| :----------------------- | -------------------: | ---: | --------: | --------: | -----------: | --------: | -----------------: |
-| flat.big1+little1        | energy_to_solution_j |    J |       7/7 |     1.193 |       168.05 |     1.946 |               1.2% |
-| flat.big1+little1        |               edp_js |  J*s |       7/7 |     23.87 |       3361.4 |     38.93 |               1.2% |
-| flat.big1+little1        |          pkg_j_per_s |    W |       7/7 |     0.060 |        8.401 |     0.097 |               1.2% |
-| flat.big1+little1        |               wall_s |    s |       7/7 | 4.783e-04 |        20.00 | 7.802e-04 |               0.0% |
-| flat.big1+little1        |               core_j |    J |       7/7 |     0.776 |       153.38 |     1.265 |               0.8% |
-| flat.big1+little1        |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.005 |               6.2% |
-| flat.big1+little1        |     bzy_mhz_big_mean |  MHz |       7/7 |     9.318 |       3473.6 |     15.20 |               0.4% |
-| flat.big1+little1        |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| flat.big1+little2        | energy_to_solution_j |    J |       7/7 |     1.618 |       168.05 |     2.640 |               1.6% |
-| flat.big1+little2        |               edp_js |  J*s |       7/7 |     32.37 |       3361.4 |     52.80 |               1.6% |
-| flat.big1+little2        |          pkg_j_per_s |    W |       7/7 |     0.081 |        8.401 |     0.132 |               1.6% |
-| flat.big1+little2        |               wall_s |    s |       7/7 | 4.823e-04 |        20.00 | 7.867e-04 |               0.0% |
-| flat.big1+little2        |               core_j |    J |       7/7 |     1.541 |       153.38 |     2.513 |               1.6% |
-| flat.big1+little2        |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.005 |               5.9% |
-| flat.big1+little2        |     bzy_mhz_big_mean |  MHz |       7/7 |     8.692 |       3473.6 |     14.18 |               0.4% |
-| flat.big1+little2        |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| flat.big1+little4        | energy_to_solution_j |    J |       7/7 |     1.576 |       168.05 |     2.571 |               1.5% |
-| flat.big1+little4        |               edp_js |  J*s |       7/7 |     31.54 |       3361.4 |     51.44 |               1.5% |
-| flat.big1+little4        |          pkg_j_per_s |    W |       7/7 |     0.079 |        8.401 |     0.129 |               1.5% |
-| flat.big1+little4        |               wall_s |    s |       7/7 | 6.073e-04 |        20.00 | 9.905e-04 |               0.0% |
-| flat.big1+little4        |               core_j |    J |       7/7 |     1.091 |       153.38 |     1.779 |               1.2% |
-| flat.big1+little4        |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.005 |               5.5% |
-| flat.big1+little4        |     bzy_mhz_big_mean |  MHz |       7/7 |     8.613 |       3473.6 |     14.05 |               0.4% |
-| flat.big1+little4        |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| flat.idle                | energy_to_solution_j |    J |       7/7 |     1.282 |       168.05 |     2.091 |               1.2% |
-| flat.idle                |               edp_js |  J*s |       7/7 |     26.12 |       3361.4 |     42.60 |               1.3% |
-| flat.idle                |          pkg_j_per_s |    W |       7/7 |     0.063 |        8.401 |     0.103 |               1.2% |
-| flat.idle                |               wall_s |    s |       7/7 |     0.045 |        20.00 |     0.073 |               0.4% |
-| flat.idle                |               core_j |    J |       7/7 |     0.674 |       153.38 |     1.099 |               0.7% |
-| flat.idle                |            rest_frac |    - |       7/7 |     0.027 |        0.087 |     0.044 |              50.1% |
-| flat.idle                |     bzy_mhz_big_mean |  MHz |       7/7 |     40.17 |       3473.6 |     65.52 |               1.9% |
-| flat.idle                |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| flat.little1             | energy_to_solution_j |    J |       7/7 |     1.960 |       168.05 |     3.197 |               1.9% |
-| flat.little1             |               edp_js |  J*s |       7/7 |     39.21 |       3361.4 |     63.96 |               1.9% |
-| flat.little1             |          pkg_j_per_s |    W |       7/7 |     0.098 |        8.401 |     0.160 |               1.9% |
-| flat.little1             |               wall_s |    s |       7/7 | 4.947e-04 |        20.00 | 8.069e-04 |               0.0% |
-| flat.little1             |               core_j |    J |       7/7 |     1.211 |       153.38 |     1.976 |               1.3% |
-| flat.little1             |            rest_frac |    - |       7/7 |     0.005 |        0.087 |     0.008 |               9.0% |
-| flat.little1             |     bzy_mhz_big_mean |  MHz |       7/7 |     10.07 |       3473.6 |     16.43 |               0.5% |
-| flat.little1             |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| flat.little2             | energy_to_solution_j |    J |       7/7 |     1.089 |       168.05 |     1.776 |               1.1% |
-| flat.little2             |               edp_js |  J*s |       7/7 |     21.78 |       3361.4 |     35.52 |               1.1% |
-| flat.little2             |          pkg_j_per_s |    W |       7/7 |     0.054 |        8.401 |     0.089 |               1.1% |
-| flat.little2             |               wall_s |    s |       7/7 | 4.826e-04 |        20.00 | 7.871e-04 |               0.0% |
-| flat.little2             |               core_j |    J |       7/7 |     0.780 |       153.38 |     1.272 |               0.8% |
-| flat.little2             |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.005 |               6.3% |
-| flat.little2             |     bzy_mhz_big_mean |  MHz |       7/7 |     9.690 |       3473.6 |     15.81 |               0.5% |
-| flat.little2             |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| flat.little4             | energy_to_solution_j |    J |       7/7 |     1.161 |       168.05 |     1.893 |               1.1% |
-| flat.little4             |               edp_js |  J*s |       7/7 |     23.26 |       3361.4 |     37.93 |               1.1% |
-| flat.little4             |          pkg_j_per_s |    W |       7/7 |     0.058 |        8.401 |     0.094 |               1.1% |
-| flat.little4             |               wall_s |    s |       7/7 | 5.782e-04 |        20.00 | 9.430e-04 |               0.0% |
-| flat.little4             |               core_j |    J |       7/7 |     0.841 |       153.38 |     1.372 |               0.9% |
-| flat.little4             |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.005 |               5.8% |
-| flat.little4             |     bzy_mhz_big_mean |  MHz |       7/7 |     8.868 |       3473.6 |     14.46 |               0.4% |
-| flat.little4             |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| partitioned.big1         | energy_to_solution_j |    J |       7/7 |     1.076 |       168.05 |     1.756 |               1.0% |
-| partitioned.big1         |               edp_js |  J*s |       7/7 |     21.54 |       3361.4 |     35.13 |               1.0% |
-| partitioned.big1         |          pkg_j_per_s |    W |       7/7 |     0.054 |        8.401 |     0.088 |               1.0% |
-| partitioned.big1         |               wall_s |    s |       7/7 | 4.773e-04 |        20.00 | 7.786e-04 |               0.0% |
-| partitioned.big1         |               core_j |    J |       7/7 |     1.138 |       153.38 |     1.856 |               1.2% |
-| partitioned.big1         |            rest_frac |    - |       7/7 |     0.004 |        0.087 |     0.007 |               7.6% |
-| partitioned.big1         |     bzy_mhz_big_mean |  MHz |       7/7 |     12.37 |       3473.6 |     20.17 |               0.6% |
-| partitioned.big1         |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| partitioned.big1+little1 | energy_to_solution_j |    J |       7/7 |     1.130 |       168.05 |     1.842 |               1.1% |
-| partitioned.big1+little1 |               edp_js |  J*s |       7/7 |     22.60 |       3361.4 |     36.87 |               1.1% |
-| partitioned.big1+little1 |          pkg_j_per_s |    W |       7/7 |     0.056 |        8.401 |     0.092 |               1.1% |
-| partitioned.big1+little1 |               wall_s |    s |       7/7 | 4.862e-04 |        20.00 | 7.931e-04 |               0.0% |
-| partitioned.big1+little1 |               core_j |    J |       7/7 |     0.861 |       153.38 |     1.404 |               0.9% |
-| partitioned.big1+little1 |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.004 |               4.7% |
-| partitioned.big1+little1 |     bzy_mhz_big_mean |  MHz |       7/7 |     12.98 |       3473.6 |     21.17 |               0.6% |
-| partitioned.big1+little1 |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| partitioned.big1+little2 | energy_to_solution_j |    J |       7/7 |     3.049 |       168.05 |     4.973 |               3.0% |
-| partitioned.big1+little2 |               edp_js |  J*s |       7/7 |     60.97 |       3361.4 |     99.45 |               3.0% |
-| partitioned.big1+little2 |          pkg_j_per_s |    W |       7/7 |     0.152 |        8.401 |     0.249 |               3.0% |
-| partitioned.big1+little2 |               wall_s |    s |       7/7 | 4.753e-04 |        20.00 | 7.753e-04 |               0.0% |
-| partitioned.big1+little2 |               core_j |    J |       7/7 |     3.056 |       153.38 |     4.984 |               3.2% |
-| partitioned.big1+little2 |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.004 |               4.9% |
-| partitioned.big1+little2 |     bzy_mhz_big_mean |  MHz |       7/7 |     8.826 |       3473.6 |     14.40 |               0.4% |
-| partitioned.big1+little2 |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| partitioned.big1+little4 | energy_to_solution_j |    J |       7/7 |     1.445 |       168.05 |     2.357 |               1.4% |
-| partitioned.big1+little4 |               edp_js |  J*s |       7/7 |     28.86 |       3361.4 |     47.07 |               1.4% |
-| partitioned.big1+little4 |          pkg_j_per_s |    W |       7/7 |     0.072 |        8.401 |     0.118 |               1.4% |
-| partitioned.big1+little4 |               wall_s |    s |       7/7 | 6.159e-04 |        20.00 |     0.001 |               0.0% |
-| partitioned.big1+little4 |               core_j |    J |       7/7 |     1.381 |       153.38 |     2.253 |               1.5% |
-| partitioned.big1+little4 |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.005 |               5.5% |
-| partitioned.big1+little4 |     bzy_mhz_big_mean |  MHz |       7/7 |     8.518 |       3473.6 |     13.89 |               0.4% |
-| partitioned.big1+little4 |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| partitioned.idle         | energy_to_solution_j |    J |       7/7 |     1.551 |       168.05 |     2.529 |               1.5% |
-| partitioned.idle         |               edp_js |  J*s |       7/7 |     31.81 |       3361.4 |     51.88 |               1.5% |
-| partitioned.idle         |          pkg_j_per_s |    W |       7/7 |     0.076 |        8.401 |     0.123 |               1.5% |
-| partitioned.idle         |               wall_s |    s |       7/7 |     0.052 |        20.00 |     0.084 |               0.4% |
-| partitioned.idle         |               core_j |    J |       7/7 |     0.686 |       153.38 |     1.119 |               0.7% |
-| partitioned.idle         |            rest_frac |    - |       7/7 |     0.016 |        0.087 |     0.025 |              29.1% |
-| partitioned.idle         |     bzy_mhz_big_mean |  MHz |       7/7 |     18.27 |       3473.6 |     29.80 |               0.9% |
-| partitioned.idle         |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| partitioned.little1      | energy_to_solution_j |    J |       7/7 |     1.130 |       168.05 |     1.844 |               1.1% |
-| partitioned.little1      |               edp_js |  J*s |       7/7 |     22.62 |       3361.4 |     36.89 |               1.1% |
-| partitioned.little1      |          pkg_j_per_s |    W |       7/7 |     0.057 |        8.401 |     0.092 |               1.1% |
-| partitioned.little1      |               wall_s |    s |       7/7 | 4.823e-04 |        20.00 | 7.867e-04 |               0.0% |
-| partitioned.little1      |               core_j |    J |       7/7 |     0.656 |       153.38 |     1.069 |               0.7% |
-| partitioned.little1      |            rest_frac |    - |       7/7 |     0.004 |        0.087 |     0.006 |               7.1% |
-| partitioned.little1      |     bzy_mhz_big_mean |  MHz |       7/7 |     10.27 |       3473.6 |     16.75 |               0.5% |
-| partitioned.little1      |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| partitioned.little2      | energy_to_solution_j |    J |       7/7 |     1.002 |       168.05 |     1.634 |               1.0% |
-| partitioned.little2      |               edp_js |  J*s |       7/7 |     20.03 |       3361.4 |     32.67 |               1.0% |
-| partitioned.little2      |          pkg_j_per_s |    W |       7/7 |     0.050 |        8.401 |     0.082 |               1.0% |
-| partitioned.little2      |               wall_s |    s |       7/7 | 4.753e-04 |        20.00 | 7.753e-04 |               0.0% |
-| partitioned.little2      |               core_j |    J |       7/7 |     0.782 |       153.38 |     1.276 |               0.8% |
-| partitioned.little2      |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.004 |               4.7% |
-| partitioned.little2      |     bzy_mhz_big_mean |  MHz |       7/7 |     8.596 |       3473.6 |     14.02 |               0.4% |
-| partitioned.little2      |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| partitioned.little4      | energy_to_solution_j |    J |       7/7 |     1.194 |       168.05 |     1.947 |               1.2% |
-| partitioned.little4      |               edp_js |  J*s |       7/7 |     23.87 |       3361.4 |     38.93 |               1.2% |
-| partitioned.little4      |          pkg_j_per_s |    W |       7/7 |     0.060 |        8.401 |     0.097 |               1.2% |
-| partitioned.little4      |               wall_s |    s |       7/7 | 4.773e-04 |        20.00 | 7.786e-04 |               0.0% |
-| partitioned.little4      |               core_j |    J |       7/7 |     0.969 |       153.38 |     1.581 |               1.0% |
-| partitioned.little4      |            rest_frac |    - |       7/7 |     0.003 |        0.087 |     0.004 |               4.8% |
-| partitioned.little4      |     bzy_mhz_big_mean |  MHz |       7/7 |     8.571 |       3473.6 |     13.98 |               0.4% |
-| partitioned.little4      |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-
-Reading: on `energy_to_solution_j`, the weakest arm comparison (`partitioned.big1+little2`) can only detect effects of **3.0% or larger**. To halve that, quadruple the reps.
-
 ## Coverage
 
 | field              | present | missing | coverage |
@@ -1568,55 +1373,6 @@ Difference in means (arm - control). A contrast whose CI straddles zero is repor
 - bzy_mhz_big_mean: higher than control by 123.42 MHz (+5.0%), 95% CI [106.64, 140.07] excludes zero; Hedges g = 6.682, permutation p = 8.9991e-04; MDE = 28.20 MHz.
 - bzy_mhz_little_mean: insufficient data (n_control=0, n_arm=7); no contrast computed.
 
-## Minimum detectable effect
-
-At 80% power, alpha 0.05, two-sided, from the observed pooled sd and n. This matters more than any p-value here: it is the smallest true effect this design could have caught. Effects below it are invisible to the experiment, not absent from the machine.
-
-| arm                    |               metric | unit | n ctl/arm | pooled sd | control mean | MDE (abs) | MDE (% of control) |
-| :--------------------- | -------------------: | ---: | --------: | --------: | -----------: | --------: | -----------------: |
-| eevdf-partitioned      | energy_to_solution_j |    J |       7/7 |     6.651 |       589.41 |     10.85 |               1.8% |
-| eevdf-partitioned      |               edp_js |  J*s |       7/7 |    141.43 |      15374.0 |    230.69 |               1.5% |
-| eevdf-partitioned      |          pkg_j_per_s |    W |       7/7 |     0.401 |        22.60 |     0.654 |               2.9% |
-| eevdf-partitioned      |               wall_s |    s |       7/7 |     0.222 |        26.09 |     0.362 |               1.4% |
-| eevdf-partitioned      |               core_j |    J |       7/7 |     6.345 |       557.95 |     10.35 |               1.9% |
-| eevdf-partitioned      |            rest_frac |    - |       7/7 |     0.001 |        0.053 |     0.002 |               3.2% |
-| eevdf-partitioned      |          wake_us_p99 |   us |       7/7 |    356.97 |       1678.5 |    582.23 |              34.7% |
-| eevdf-partitioned      |          wake_us_p50 |   us |       7/7 |    248.50 |       326.49 |    405.32 |             124.1% |
-| eevdf-partitioned      |     bzy_mhz_big_mean |  MHz |       7/7 |     16.51 |       2460.7 |     26.94 |               1.1% |
-| eevdf-partitioned      |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| scx-flat               | energy_to_solution_j |    J |       7/7 |     7.403 |       589.41 |     12.08 |               2.0% |
-| scx-flat               |               edp_js |  J*s |       7/7 |    130.54 |      15374.0 |    212.92 |               1.4% |
-| scx-flat               |          pkg_j_per_s |    W |       7/7 |     0.479 |        22.60 |     0.782 |               3.5% |
-| scx-flat               |               wall_s |    s |       7/7 |     0.269 |        26.09 |     0.439 |               1.7% |
-| scx-flat               |               core_j |    J |       7/7 |     7.245 |       557.95 |     11.82 |               2.1% |
-| scx-flat               |            rest_frac |    - |       7/7 |     0.001 |        0.053 |     0.002 |               3.8% |
-| scx-flat               |          wake_us_p99 |   us |       7/7 |    716.52 |       1678.5 |    1168.7 |              69.6% |
-| scx-flat               |          wake_us_p50 |   us |       7/7 |    268.42 |       326.49 |    437.81 |             134.1% |
-| scx-flat               |     bzy_mhz_big_mean |  MHz |       7/7 |     20.22 |       2460.7 |     32.99 |               1.3% |
-| scx-flat               |  bzy_mhz_little_mean |  MHz |       0/0 |       n/a |          n/a |       n/a |                n/a |
-| scx-partitioned        | energy_to_solution_j |    J |       7/7 |     6.185 |       589.41 |     10.09 |               1.7% |
-| scx-partitioned        |               edp_js |  J*s |       7/7 |    119.92 |      15374.0 |    195.59 |               1.3% |
-| scx-partitioned        |          pkg_j_per_s |    W |       7/7 |     0.443 |        22.60 |     0.723 |               3.2% |
-| scx-partitioned        |               wall_s |    s |       7/7 |     0.278 |        26.09 |     0.454 |               1.7% |
-| scx-partitioned        |               core_j |    J |       7/7 |     5.944 |       557.95 |     9.696 |               1.7% |
-| scx-partitioned        |            rest_frac |    - |       7/7 |     0.001 |        0.053 |     0.002 |               3.2% |
-| scx-partitioned        |          wake_us_p99 |   us |       7/7 |    437.68 |       1678.5 |    713.89 |              42.5% |
-| scx-partitioned        |          wake_us_p50 |   us |       7/7 |    277.15 |       326.49 |    452.05 |             138.5% |
-| scx-partitioned        |     bzy_mhz_big_mean |  MHz |       7/7 |     17.22 |       2460.7 |     28.09 |               1.1% |
-| scx-partitioned        |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-| scx-partitioned-strict | energy_to_solution_j |    J |       7/7 |     6.563 |       589.41 |     10.70 |               1.8% |
-| scx-partitioned-strict |               edp_js |  J*s |       7/7 |    327.41 |      15374.0 |    534.02 |               3.5% |
-| scx-partitioned-strict |          pkg_j_per_s |    W |       7/7 |     0.432 |        22.60 |     0.704 |               3.1% |
-| scx-partitioned-strict |               wall_s |    s |       7/7 |     0.437 |        26.09 |     0.714 |               2.7% |
-| scx-partitioned-strict |               core_j |    J |       7/7 |     6.234 |       557.95 |     10.17 |               1.8% |
-| scx-partitioned-strict |            rest_frac |    - |       7/7 |     0.001 |        0.053 |     0.002 |               3.2% |
-| scx-partitioned-strict |          wake_us_p99 |   us |       7/7 |    727.16 |       1678.5 |    1186.0 |              70.7% |
-| scx-partitioned-strict |          wake_us_p50 |   us |       7/7 |    258.06 |       326.49 |    420.91 |             128.9% |
-| scx-partitioned-strict |     bzy_mhz_big_mean |  MHz |       7/7 |     17.29 |       2460.7 |     28.20 |               1.1% |
-| scx-partitioned-strict |  bzy_mhz_little_mean |  MHz |       0/7 |       n/a |          n/a |       n/a |                n/a |
-
-Reading: on `energy_to_solution_j`, the weakest arm comparison (`scx-flat`) can only detect effects of **2.0% or larger**. To halve that, quadruple the reps.
-
 ## Coverage
 
 | field              | present | missing | coverage |
@@ -1634,4 +1390,4 @@ Reading: on `energy_to_solution_j`, the weakest arm comparison (`scx-flat`) can 
 
 ---
 
-Generated by `scripts/analyze.py` on 2026-07-22T22:14:08. 203 runs. Do not edit by hand.
+Generated by `scripts/analyze.py` on 2026-07-22T22:18:54. 203 runs. Do not edit by hand.
